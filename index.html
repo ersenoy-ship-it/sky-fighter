@@ -16,22 +16,22 @@
     background: #000;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 clamp(12px, 4vw, 32px);
+    justify-content: center;
+    gap: clamp(8px, 3vw, 24px);
     flex-shrink: 0;
     flex: 1;
     min-height: 0;
+    padding: 8px 0;
   }
-  #dpad {
-    position: relative;
-    width: clamp(120px, 33vw, 180px);
-    height: clamp(120px, 33vw, 180px);
-    flex-shrink: 0;
+  #centerCol {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(4px, 1.5vw, 10px);
   }
   .dBtn {
-    position: absolute;
-    width: 33.3%;
-    height: 33.3%;
+    width: clamp(50px, 14vw, 72px);
+    height: clamp(50px, 14vw, 72px);
     background: #111;
     border: 1.5px solid #444;
     border-radius: 8px;
@@ -39,24 +39,21 @@
     align-items: center;
     justify-content: center;
     color: #aaa;
-    font-size: clamp(16px, 5vw, 26px);
+    font-size: clamp(18px, 6vw, 30px);
     cursor: pointer;
+    flex-shrink: 0;
     -webkit-tap-highlight-color: transparent;
   }
   .dBtn.pressed { background: #2a2a2a; border-color: #666; color: #fff; }
-  #dUp    { top: 0;     left: 33.3%; }
-  #dDown  { bottom: 0;  left: 33.3%; }
-  #dLeft  { top: 33.3%; left: 0;     }
-  #dRight { top: 33.3%; right: 0;    }
   #fireBtn {
-    width: clamp(80px, 22vw, 130px);
-    height: clamp(80px, 22vw, 130px);
+    width: clamp(70px, 20vw, 110px);
+    height: clamp(70px, 20vw, 110px);
     border-radius: 50%;
     background: #1a0000;
     border: 2.5px solid #f00;
     color: #f44;
     font-family: monospace;
-    font-size: clamp(11px, 3vw, 17px);
+    font-size: clamp(10px, 3vw, 16px);
     font-weight: bold;
     letter-spacing: 1px;
     cursor: pointer;
@@ -70,13 +67,13 @@
 <div id="ui"><span id="sc">SCORE: 0</span><span id="lv">LEVEL: 1</span><span id="lf">LIVES: ♥♥♥</span></div>
 <canvas id="gameCanvas" tabindex="0"></canvas>
 <div id="touchControls">
-  <div id="dpad">
+  <div class="dBtn" id="dLeft">◀</div>
+  <div id="centerCol">
     <div class="dBtn" id="dUp">▲</div>
+    <button id="fireBtn">ОГОНЬ</button>
     <div class="dBtn" id="dDown">▼</div>
-    <div class="dBtn" id="dLeft">◀</div>
-    <div class="dBtn" id="dRight">▶</div>
   </div>
-  <button id="fireBtn">ОГОНЬ</button>
+  <div class="dBtn" id="dRight">▶</div>
 </div>
 
 <script>
