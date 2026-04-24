@@ -1,19 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Sky Fighter</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { width: 100%; height: 100%; background: #000; overflow: hidden; touch-action: none; user-select: none; }
   body { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
-  #ui { font-family: monospace; color: #fff; text-align: center; padding: 4px 0; background: #000; width: 100%; }
-  #ui span { margin: 0 10px; font-size: 13px; letter-spacing: 1px; }
-  #gameCanvas { display: block; background: #000; image-rendering: pixelated; image-rendering: crisp-edges; touch-action: none; }
-  #touchControls { width: 100%; background: #000; display: flex; align-items: center; justify-content: space-between; padding: 0 5vw; flex-shrink: 0; }
-  #dpad { position: relative; width: 33vw; height: 33vw; max-width: 140px; max-height: 140px; }
-  .dBtn { position: absolute; width: 33%; height: 33%; background: #111; border: 1.5px solid #333; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #aaa; font-size: min(5vw, 20px); cursor: pointer; }
-  .dBtn.pressed { background: #2a2a2a; border-color: #555; color: #fff; }
-  #dUp { top:0; left:33%; } #dDown { bottom:0; left:33%; } #dLeft { top:33%; left:0; } #dRight { top:33%; right:0; }
-  #fireBtn { width: 20vw; height: 20vw; max-width: 90px; max-height: 90px; border-radius: 50%; background: #1a0000; border: 2px solid #f00; color: #f44; font-family: monospace; font-size: min(3vw, 13px); font-weight: bold; letter-spacing: 1px; cursor: pointer; }
+  #ui { font-family: monospace; color: #fff; text-align: center; padding: 4px 0; background: #000; width: 100%; flex-shrink: 0; }
+  #ui span { margin: 0 10px; font-size: clamp(11px, 2.5vw, 14px); letter-spacing: 1px; }
+  #gameCanvas { display: block; background: #000; image-rendering: pixelated; image-rendering: crisp-edges; touch-action: none; flex-shrink: 0; }
+  #touchControls {
+    width: 100%;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(12px, 4vw, 32px);
+    flex-shrink: 0;
+    flex: 1;
+    min-height: 0;
+  }
+  #dpad {
+    position: relative;
+    width: clamp(120px, 33vw, 180px);
+    height: clamp(120px, 33vw, 180px);
+    flex-shrink: 0;
+  }
+  .dBtn {
+    position: absolute;
+    width: 33.3%;
+    height: 33.3%;
+    background: #111;
+    border: 1.5px solid #444;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    font-size: clamp(16px, 5vw, 26px);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .dBtn.pressed { background: #2a2a2a; border-color: #666; color: #fff; }
+  #dUp    { top: 0;     left: 33.3%; }
+  #dDown  { bottom: 0;  left: 33.3%; }
+  #dLeft  { top: 33.3%; left: 0;     }
+  #dRight { top: 33.3%; right: 0;    }
+  #fireBtn {
+    width: clamp(80px, 22vw, 130px);
+    height: clamp(80px, 22vw, 130px);
+    border-radius: 50%;
+    background: #1a0000;
+    border: 2.5px solid #f00;
+    color: #f44;
+    font-family: monospace;
+    font-size: clamp(11px, 3vw, 17px);
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+    flex-shrink: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
   #fireBtn.pressed { background: #300; border-color: #f44; color: #fff; }
 </style>
-
+</head>
+<body>
 <div id="ui"><span id="sc">SCORE: 0</span><span id="lv">LEVEL: 1</span><span id="lf">LIVES: ♥♥♥</span></div>
 <canvas id="gameCanvas" tabindex="0"></canvas>
 <div id="touchControls">
@@ -36,14 +89,15 @@ function resize() {
   const ui = document.getElementById('ui');
   const tc = document.getElementById('touchControls');
   const uiH = ui.offsetHeight;
-  const tcH = Math.min(window.innerWidth * 0.38, 150);
   const availW = window.innerWidth;
-  const availH = window.innerHeight - uiH - tcH;
-  scale = Math.min(availW / GW, availH / GH);
+  const availH = window.innerHeight;
+  const ctrlH = Math.max(140, Math.min(availH * 0.28, 200));
+  const canvasAvailH = availH - uiH - ctrlH;
+  scale = Math.min(availW / GW, canvasAvailH / GH);
   cv.width = GW; cv.height = GH;
   cv.style.width = (GW * scale) + 'px';
   cv.style.height = (GH * scale) + 'px';
-  tc.style.height = tcH + 'px';
+  tc.style.height = ctrlH + 'px';
 }
 window.addEventListener('resize', resize);
 setTimeout(resize, 50);
@@ -199,3 +253,5 @@ function loop() {
 }
 stars=initStars(); resize(); loop();
 </script>
+</body>
+</html>
